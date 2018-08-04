@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<launch>
+  
+  <arg name="camera"   default="stereo"/>
+
+  <arg name="rviz_cfg" default="$(find stereo_reconstruct)/launch/config/stereo_reconstruct.rviz" />
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
+
+  <node pkg="nodelet" type="nodelet" name="stereo_reconstruct_pointcloud" args="standalone stereo_reconstruct/pointcloud" respawn="true" output="screen">
+
+    <remap from="left/image"        to="$(arg camera)/left/image_rect"/>
+    <remap from="right/image"       to="$(arg camera)/right/image_rect"/>
+    <remap from="left/camera_info"  to="$(arg camera)/left/camera_info"/>
+    <remap from="right/camera_info" to="$(arg camera)/right/camera_info"/>
+
+    <remap from="cloud"             to="$(arg camera)/voxel_cloud" />
+    <remap from="depth_ghc"         to="$(arg camera)/depth_ghc/image" />
+
+    <param name="decimation"        type="double" value="1"/>
+    <param name="voxel_size"        type="double" value="0.02"/>
+    <param name="approx_sync"       type="bool"   value="true"/>
+
+    <param name="isMilliMeter"      type="bool"   value="true"/>
+
+    <param name="isUseOCL"          type="bool"   value="true"/>
+
+    <param name="min_depth"         type="double" value="0.0"/>
+    <param name="max_depth"         type="double" value="5.0"/>
+
+    <param name="offset_t"          type="double" value="10"/>
+    <param name="offset_b"          type="double" value="10"/>
+
+    <param name="frame_id_depth"    value="$(arg camera)_depth_optical_frame"/>
+    <param name="frame_id_cloud"    value="$(arg camera)_cloud_optical_frame"/>
+
+  </node>
+
+  <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" output="screen">
+
+    <remap from="image"             to="$(arg camera)/depth_ghc/image"/>
+    <remap from="camera_info"       to="$(arg camera)/depth_ghc/camera_info"/>
+
+    <param name="scan_height"       value="5"/>
+    <param name="output_frame_id"   value="laser_scan_depth_frame"/>
+    <param name="range_max"         value="20" />
+
+  </node>
+
+
+  <include file="$(find stereo_reconstruct)/launch/depth_cloud_frames.launch">  </include>
+
+  <node pkg="tf" type="static_transform_publisher" name="left_to_laserscan" args="0 0 0 0 0 0 $(arg camera)_left_frame laser_scan_depth_frame 100" />  
+
+</launch>

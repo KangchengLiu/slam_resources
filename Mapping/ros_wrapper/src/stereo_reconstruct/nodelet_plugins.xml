@@ -1,0 +1,10 @@
+<library path="lib/libstereo_reconstruct">
+    <class name="stereo_reconstruct/pointcloud"
+           type="stereo_reconstruct::StereoReconstruct"
+           base_class_type="nodelet::Nodelet">
+       <description>
+           this is point_cloud nodelet.
+       </description>
+    </class>
+</library>
+
