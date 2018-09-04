@@ -1,2 +1,4 @@
 build/
+devel/
 .catkin_workspace
+Mapping/ros_wrapper/src/CMakeLists.txt
