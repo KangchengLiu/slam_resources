@@ -15,7 +15,8 @@
         <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
     </group>
 
-    <node pkg="nodelet" type="nodelet" name="stereo_reconstruct_pointcloud" args="standalone stereo_reconstruct/pointcloud" respawn="false" output="screen">
+    <node pkg="nodelet" type="nodelet" name="stereo_reconstruct_pointcloud" args="standalone stereo_reconstruct/pointcloud"
+          respawn="false" output="screen">
 
         <remap from="left/image"        to="$(arg camera)/left/image_rect"/>
         <remap from="right/image"       to="$(arg camera)/right/image_rect"/>

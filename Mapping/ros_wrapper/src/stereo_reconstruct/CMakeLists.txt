@@ -8,7 +8,7 @@ ENDIF()
 MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 
 set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -Wall -O3 -march=native")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -march=native -Wreorder")
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -145,13 +145,9 @@ include_directories(
 )
 
 # Declare a C++ library
-add_library(${PROJECT_NAME}
-        src/stereo_reconstruct.cpp
-)
+add_library(${PROJECT_NAME} src/stereo_reconstruct.cpp src/stereo_bm_cl.cpp)
 
-target_link_libraries(${PROJECT_NAME}
-  ${catkin_LIBRARIES}
-)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} OpenCL)
 
 # Add cmake target dependencies of the library
 # as an example, code may need to be generated before libraries
