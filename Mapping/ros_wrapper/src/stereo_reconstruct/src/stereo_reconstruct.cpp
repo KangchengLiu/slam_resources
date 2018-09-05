@@ -276,7 +276,6 @@ namespace stereo_reconstruct {
 
                         cv::Point3f ptXYZ;
                         {
-                            // inspired from ROS image_geometry/src/stereo_camera_model.cpp
                             if (disp > 0.0f && stereo_camera_model.baseline() > 0.0f &&
                                 stereo_camera_model.left().fx() > 0.0f) {
                                 //Z = baseline * f / (d + cx1-cx0);
@@ -324,6 +323,7 @@ namespace stereo_reconstruct {
                 }
 
                 publishDepth(*depth_frame_, camInfoLeft);
+
                 publishCloud(pcl_cloud_, imageLeft->header);
             }
         }
@@ -337,30 +337,17 @@ namespace stereo_reconstruct {
             if (depth.type() == CV_32FC1)
                 encoding = sensor_msgs::image_encodings::TYPE_32FC1;
 
-            sensor_msgs::Image left_img_msg;
-            std_msgs::Header header_left;
-            header_left.frame_id = frame_id_depth_;
-            header_left.stamp = ros::Time::now();
-            cv_bridge::CvImage left_img_bridge;
-            left_img_bridge = cv_bridge::CvImage(header_left, encoding, depth);
-            left_img_bridge.toImageMsg(left_img_msg);
+            sensor_msgs::Image depth_msg;
+            std_msgs::Header depth_header;
+            depth_header.frame_id = frame_id_depth_;
+            depth_header.stamp    = ros::Time::now();
+            cv_bridge::CvImage(depth_header, encoding, depth).toImageMsg(depth_msg);
 
-            sensor_msgs::Image left_data;
-            left_data.header.frame_id = frame_id_depth_;
-            left_data.height = depth.rows;
-            left_data.width  = depth.cols;
-            left_data.encoding = encoding;
-            left_data.is_bigendian = false;
-            left_data.step = depth.step;
-            left_data.data = left_img_msg.data;
+            sensor_msgs::CameraInfo depth_info;
+            depth_info = *camInfo;
+            depth_info.header = depth_msg.header;
 
-            sensor_msgs::CameraInfo left_info;
-            left_info = *camInfo;
-            left_info.header = left_data.header;
-
-            ros::Time stamp = ros::Time::now();
-
-            depthPub_.publish(left_data, left_info, stamp);
+            depthPub_.publish(depth_msg, depth_info, ros::Time::now());
         }
 
         void publishCloud(pcl::PointCloud<pcl::PointXYZRGB>::Ptr &pclCloud, const std_msgs::Header &header) {
