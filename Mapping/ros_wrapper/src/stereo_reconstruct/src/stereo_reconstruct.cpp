@@ -68,7 +68,8 @@ namespace stereo_reconstruct {
             if (depth_frame_)
                 delete depth_frame_;
 
-            release_ocl();
+            if(isUseOCL_)
+                release_ocl();
         }
 
     private:
@@ -127,7 +128,8 @@ namespace stereo_reconstruct {
             image_transport::ImageTransport depth_it(nh);
             depthPub_ = depth_it.advertiseCamera("depth_ghc", 1, false);
 
-            init_ocl();
+            if(isUseOCL_)
+                init_ocl();
         }
 
         void stereoCallback(const sensor_msgs::ImageConstPtr &imageLeft,
