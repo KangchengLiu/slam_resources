@@ -1,6 +1,3 @@
-//
-// Created by 高翔 on 2017/12/15.
-//
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <Eigen/Core>
@@ -11,13 +8,15 @@ using namespace std;
 using namespace Eigen;
 
 int main(int argc, char **argv) {
+
     double ar = 1.0, br = 2.0, cr = 1.0;         // 真实参数值
     double ae = 2.0, be = -1.0, ce = 5.0;        // 估计参数值
+
     int N = 100;                                 // 数据点
     double w_sigma = 1.0;                        // 噪声Sigma值
     cv::RNG rng;                                 // OpenCV随机数产生器
 
-    vector<double> x_data, y_data;      // 数据
+    vector<double> x_data, y_data;
     for (int i = 0; i < N; i++) {
         double x = i / 100.0;
         x_data.push_back(x);
@@ -25,38 +24,36 @@ int main(int argc, char **argv) {
     }
 
     // 开始Gauss-Newton迭代
-    int iterations = 100;    // 迭代次数
-    double cost = 0, lastCost = 0;  // 本次迭代的cost和上一次迭代的cost
+    double xi, yi, ye, error, cost, lastCost;
+    for (int iter = 0; iter < 100; iter++) {
 
-    for (int iter = 0; iter < iterations; iter++) {
-
+        Vector3d J;
         Matrix3d H = Matrix3d::Zero();             // Hessian = J^T J in Gauss-Newton
         Vector3d b = Vector3d::Zero();             // bias
+
         cost = 0;
 
         for (int i = 0; i < N; i++) {
-            double xi = x_data[i], yi = y_data[i];  // 第i个数据点
-            // start your code here
-			double expvalue = exp(ae*xi*xi + be*xi + ce);
-            double error = 0;   // 第i个数据点的计算误差
-            error = yi - expvalue; // 填写计算error的表达式
-            Vector3d J; // 雅可比矩阵
-            J[0] = -expvalue*xi*xi;  // de/da
-            J[1] = -expvalue*xi;  // de/db
-            J[2] = -expvalue;  // de/dc
+            xi = x_data[i];
+            yi = y_data[i];
+
+			ye = exp(ae*xi*xi + be*xi + ce);
+
+            error = yi - ye;
+
+            J[0] = -ye*xi*xi;  // de/da
+            J[1] = -ye*xi;     // de/db
+            J[2] = -ye;        // de/dc
 
             H += J * J.transpose(); // GN近似的H
             b += -error * J;
-            // end your code here
 
             cost += error * error;
         }
 
         // 求解线性方程 Hx=b，建议用ldlt
- 	// start your code here
         Vector3d dx;
 		dx = H.ldlt().solve(b);
-	// end your code here
 
         if (isnan(dx[0])) {
             cout << "result is nan!" << endl;

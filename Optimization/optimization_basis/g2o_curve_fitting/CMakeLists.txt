@@ -1,9 +1,6 @@
 find_package( G2O REQUIRED )
 if(G2O_FOUND)
-    message(g2o log: ${G2O_INCLUDE_DIRS})
     include_directories( ${G2O_INCLUDE_DIRS} )
-else()
-    message(g2o not found!!!)
 endif()
 
 find_package( OpenCV REQUIRED )

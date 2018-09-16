@@ -3,6 +3,7 @@ find_package( G2O REQUIRED )
 include_directories( ${G2O_INCLUDE_DIR} )
 link_directories( "/opt/g2o/lib" )
 
+# Cholmod
 find_package( Cholmod REQUIRED )
 include_directories( ${CHOLMOD_INCLUDE_DIR} )
 link_libraries( ${CHOLMOD_LIBRARIES} )
