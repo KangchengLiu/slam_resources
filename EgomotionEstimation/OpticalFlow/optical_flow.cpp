@@ -8,8 +8,8 @@ using namespace cv;
 
 // this program shows how to use optical flow
 
-string file_1 = "../1.png";  // first image
-string file_2 = "../2.png";  // second image
+string file_1 = "../data/1.png";  // first image
+string file_2 = "../data/2.png";  // second image
 
 // TODO implement this funciton
 /**

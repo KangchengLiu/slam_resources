@@ -16,9 +16,9 @@ double fx = 718.856, fy = 718.856, cx = 607.1928, cy = 185.2157;
 // 基线
 double baseline = 0.573;
 // paths
-string left_file = "../left.png";
-string disparity_file = "../disparity.png";
-boost::format fmt_others("../%06d.png");    // other files
+string left_file = "../data/left.png";
+string disparity_file = "../data/disparity.png";
+boost::format fmt_others("../data/%06d.png");    // other files
 
 // useful typedefs
 typedef Eigen::Matrix<double, 6, 6> Matrix6d;
@@ -139,7 +139,7 @@ void DirectPoseEstimationSingleLayer(
 
             if(u-half_patch_size<0 || u+half_patch_size>=img1.cols || v-half_patch_size<0 || v+half_patch_size>=img1.rows)
                 continue;
-            
+
             double Z1 = depth_ref[i];
 
             double X1 = Z1 * (u-cx) / fx;
@@ -193,7 +193,7 @@ void DirectPoseEstimationSingleLayer(
                     J_pixel_xi( 1,3 ) = - ( 1+Y*Y*ZInv2) *fy;
                     J_pixel_xi( 1,4 ) = X*Y*ZInv2*fy;
                     J_pixel_xi( 1,5 ) = X*ZInv*fy;
-                        
+
                     Eigen::Vector2d J_img_pixel;    // image gradients
                     J_img_pixel[0] = (GetPixelValue(img2, u2+1, v2) - GetPixelValue(img2, u2-1, v2)) / 2;
                     J_img_pixel[1] = (GetPixelValue(img2, u2, v2+1) - GetPixelValue(img2, u2, v2-1)) / 2;
