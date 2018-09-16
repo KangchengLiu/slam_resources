@@ -4,5 +4,6 @@ devel/
 Mapping/ros_wrapper/src/CMakeLists.txt
 .idea/
 cmake-build-debug/
-
+*.swo
 *.ply
+*.g2o
