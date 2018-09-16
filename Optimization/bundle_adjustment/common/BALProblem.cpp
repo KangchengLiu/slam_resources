@@ -7,7 +7,6 @@
 
 #include <Eigen/Core>
 
-
 #include "tools/random.h"
 #include "tools/rotation.h"
 
@@ -39,7 +38,7 @@ double Median(std::vector<double>* data){
 BALProblem::BALProblem(const std::string& filename, bool use_quaternions){
   FILE* fptr = fopen(filename.c_str(), "r");
 
-    
+
   if (fptr == NULL) {
     std::cerr << "Error: unable to open file " << filename;
     return;
@@ -103,7 +102,7 @@ BALProblem::BALProblem(const std::string& filename, bool use_quaternions){
 
 void BALProblem::WriteToFile(const std::string& filename)const{
   FILE* fptr = fopen(filename.c_str(),"w");
-  
+
   if(fptr == NULL)
   {
     std::cerr<<"Error: unable to open file "<< filename;
@@ -184,7 +183,7 @@ void BALProblem::WriteToPLYFile(const std::string& filename)const{
     of.close();
 }
 
-void BALProblem::CameraToAngelAxisAndCenter(const double* camera, 
+void BALProblem::CameraToAngelAxisAndCenter(const double* camera,
                                             double* angle_axis,
                                             double* center) const{
     VectorRef angle_axis_ref(angle_axis,3);
@@ -213,7 +212,7 @@ void BALProblem::AngleAxisAndCenterToCamera(const double* angle_axis,
       VectorRef(camera, 3) = angle_axis_ref;
     }
 
-    // t = -R * c 
+    // t = -R * c
     AngleAxisRotatePoint(angle_axis,center,camera+camera_block_size() - 6);
     VectorRef(camera + camera_block_size() - 6,3) *= -1.0;
 }
@@ -225,7 +224,7 @@ void BALProblem::Normalize(){
   double* points = mutable_points();
   for(int i = 0; i < 3; ++i){
     for(int j = 0; j < num_points_; ++j){
-      tmp[j] = points[3 * j + i];      
+      tmp[j] = points[3 * j + i];
     }
     median(i) = Median(&tmp);
   }
@@ -260,7 +259,7 @@ void BALProblem::Normalize(){
   }
 }
 
-void BALProblem::Perturb(const double rotation_sigma, 
+void BALProblem::Perturb(const double rotation_sigma,
                          const double translation_sigma,
                          const double point_sigma){
    assert(point_sigma >= 0.0);

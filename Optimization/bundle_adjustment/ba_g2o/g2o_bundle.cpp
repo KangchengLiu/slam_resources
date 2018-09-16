@@ -26,8 +26,8 @@
 
 #include "g2o/solvers/structure_only/structure_only_solver.h"
 
-#include "common/BundleParams.h"
-#include "common/BALProblem.h"
+#include "BundleParams.h"
+#include "BALProblem.h"
 #include "g2o_bal_class.h"
 
 

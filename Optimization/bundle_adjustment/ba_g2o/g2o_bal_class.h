@@ -2,10 +2,10 @@
 #include "g2o/core/base_vertex.h"
 #include "g2o/core/base_binary_edge.h"
 
-#include "ceres/autodiff.h"
+#include "ceres/internal/autodiff.h"
 
 #include "tools/rotation.h"
-#include "common/projection.h"
+#include "projection.h"
 
 class VertexCameraBAL : public g2o::BaseVertex<9,Eigen::VectorXd>
 {
@@ -101,7 +101,7 @@ public:
         // use numeric Jacobians
         // BaseBinaryEdge<2, Vector2d, VertexCameraBAL, VertexPointBAL>::linearizeOplus();
         // return;
-        
+
         // using autodiff from ceres. Otherwise, the system will use g2o numerical diff for Jacobians
 
         const VertexCameraBAL* cam = static_cast<const VertexCameraBAL*> ( vertex ( 0 ) );

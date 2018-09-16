@@ -1,9 +1,3 @@
-cmake_minimum_required(VERSION 2.8)
-project(GaussNewton)
-
-set(CMAKE_CXX_STANDARD 11)
-
-include_directories("/opt/eigen-3.3.4/include/eigen3")
 
 find_package( OpenCV )
 if( OpenCV_FOUND )
@@ -11,4 +5,4 @@ if( OpenCV_FOUND )
 	link_libraries( ${OpenCV_LIBS} )
 endif()
 
-add_executable(${PROJECT_NAME} gaussnewton.cpp)
+add_executable( gauss_newton gauss_newton.cpp )

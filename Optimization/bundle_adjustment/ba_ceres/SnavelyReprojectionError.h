@@ -5,8 +5,8 @@
 #include "ceres/ceres.h"
 
 
-#include "common/tools/rotation.h"
-#include "common/projection.h"
+#include "tools/rotation.h"
+#include "projection.h"
 
 class SnavelyReprojectionError
 {

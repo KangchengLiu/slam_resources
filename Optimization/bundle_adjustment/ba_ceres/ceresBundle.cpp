@@ -3,8 +3,8 @@
 #include "ceres/ceres.h"
 
 #include "SnavelyReprojectionError.h"
-#include "common/BALProblem.h"
-#include "common/BundleParams.h"
+#include "BALProblem.h"
+#include "BundleParams.h"
 
 
 using namespace ceres;

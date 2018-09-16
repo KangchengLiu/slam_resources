@@ -12,7 +12,7 @@ using namespace Eigen;
 #include <iostream>
 #include <iomanip>
 
-#include <sophus/se3.hpp>
+#include <sophus/se3.h>
 
 using namespace std;
 
@@ -31,9 +31,9 @@ int main(int argc, char **argv) {
     double fx = 520.9, fy = 521.0, cx = 325.1, cy = 249.7;
     K << fx, 0, cx, 0, fy, cy, 0, 0, 1;
 
-    // load points in to p3d and p2d 
+    // load points in to p3d and p2d
     // START YOUR CODE HERE
-    
+
     ifstream fileP2D(p2d_file);
     ifstream fileP3D(p3d_file);
     if(!fileP2D.is_open() || !fileP3D.is_open()){
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     int nPoints = p3d.size();
     cout << "points: " << nPoints << endl;
 
-    Sophus::SE3<double> T_esti; // estimated pose
+    Sophus::SE3 T_esti; // estimated pose
 
     for (int iter = 0; iter < iterations; iter++) {
 
@@ -70,8 +70,8 @@ int main(int argc, char **argv) {
         // compute cost
         for (int i = 0; i < nPoints; i++) {
             // compute cost for p3d[I] and p2d[I]
-            // START YOUR CODE HERE 
-            
+            // START YOUR CODE HERE
+
             Vector2d uv = p2d[i];
             Vector3d Pc = T_esti * p3d[i];
 
@@ -91,8 +91,8 @@ int main(int argc, char **argv) {
 
 	        // compute jacobian
             Matrix<double, 2, 6> J;
-            // START YOUR CODE HERE 
-           
+            // START YOUR CODE HERE
+
             J(0,0) = -fx/z;
             J(0,1) =  0;
             J(0,2) =  fx*x/z2;
@@ -112,9 +112,9 @@ int main(int argc, char **argv) {
             b += -J.transpose() * e;
         }
 
-	    // solve dx 
+	    // solve dx
         Vector6d dx;
-        // START YOUR CODE HERE 
+        // START YOUR CODE HERE
         dx = H.ldlt().solve(b);
         // END YOUR CODE HERE
 
@@ -130,12 +130,12 @@ int main(int argc, char **argv) {
         }
 
         // update your estimation
-        // START YOUR CODE HERE 
-        
-        T_esti *= Sophus::SE3<double>::exp(dx);
+        // START YOUR CODE HERE
+
+        T_esti *= Sophus::SE3::exp(dx);
 
         // END YOUR CODE HERE
-        
+
         lastCost = cost;
 
         cout << "iteration " << iter << " cost=" << cout.precision(12) << cost << endl;
