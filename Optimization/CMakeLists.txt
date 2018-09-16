@@ -22,7 +22,9 @@ include_directories( ${Sophus_INCLUDE_DIRS} )
 link_libraries(Sophus)
 
 
-add_subdirectory( gauss_newton )
+add_subdirectory( optimization_basis/gauss_newton )
+add_subdirectory( optimization_basis/g2o_curve_fitting )
+add_subdirectory( optimization_basis/ceres_curve_fitting )
 
 add_subdirectory( bundle_adjustment/common )
 add_subdirectory( bundle_adjustment/ba_gauss_newton )
