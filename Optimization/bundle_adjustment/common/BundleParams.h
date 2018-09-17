@@ -1,3 +1,7 @@
+/**
+ * 存储程序需要的所有参数
+ */
+
 #ifndef BUNDLEPARAMS_H
 #define BUNDLEPARAMS_H
 

@@ -1,5 +1,9 @@
 #ifndef BALPROBLEM_H
 #define BALPROBLEM_H
+/**
+ * 用于存储程序需要优化的数据
+ * 宏观的功能有存储相机和路标点之间的关联，相机和路标的初始值，数据导出为PLY文件等功能
+ */
 
 #include <stdio.h>
 #include <string>
