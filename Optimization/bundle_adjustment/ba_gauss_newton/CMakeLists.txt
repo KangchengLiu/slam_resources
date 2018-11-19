@@ -1,3 +1,0 @@
-
-add_executable(ba_gauss_newton ba_gauss_newton.cpp)
-target_link_libraries(ba_gauss_newton)

@@ -1,6 +1,4 @@
-# Visual SLAM
-
-Visual SLAM Practise
+# SLAM Resources
 
 -----
 
@@ -16,8 +14,7 @@ Visual SLAM Practise
 * Sparse Map
 * Dense Map
 
-## Optimization
-* Bundle Adjustment with g2o or ceres
+## State Estimation
 
 ## Loop Closure
 * BoW2
