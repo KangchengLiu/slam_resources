@@ -2,19 +2,18 @@
 
 -----
 
-## Image Process
-* Featrues Extraction
+# 1. Computer Vision
 
-## Egomotion Estimation
+# 2. Egomotion Estimation
 * Epipolar Geometry
 * PnP
 * ICP
 
-## Mapping
+# 3. State Estimation
+
+# 4. Mapping
 * Sparse Map
 * Dense Map
 
-## State Estimation
-
-## Loop Closure
+# 5. Loop Closure
 * BoW2
