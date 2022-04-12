@@ -1,3 +1,5 @@
+<!-- Adapted by Kangcheng Liu -->
+
 # SLAM Resources
 
 -----
